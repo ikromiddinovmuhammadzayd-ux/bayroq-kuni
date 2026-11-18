@@ -373,6 +373,55 @@
     .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
     .reveal.visible { opacity: 1; transform: none; }
 
+    .splash-screen {
+      position: fixed;
+      z-index: 9999;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #0099b5 0%, #fff 50%, #1eb53a 100%);
+      text-align: center;
+      transition: opacity .6s ease, visibility .6s ease;
+    }
+    .splash-screen.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .splash-card {
+      width: min(450px, 100%);
+      padding: 28px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.96);
+      box-shadow: 0 18px 50px rgba(0,0,0,.18);
+    }
+    .splash-loader {
+      width: 52px;
+      height: 52px;
+      margin: 0 auto 20px;
+      border: 5px solid rgba(9,33,61,.12);
+      border-top-color: var(--red);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .splash-card h2 { margin: 0 0 10px; font-size: 21px; }
+    .splash-card p { margin: 6px 0; color: #536476; line-height: 1.6; }
+    .credit-links { margin-top: 16px; padding-top: 12px; border-top: 1px solid #e1e6e3; }
+    .credit-links a, .footer-inner a { color: #0088cc; font-weight: 800; text-decoration: none; }
+    .credit-links a:hover, .footer-inner a:hover { text-decoration: underline; }
+    .splash-progress { height: 5px; margin-top: 18px; overflow: hidden; border-radius: 8px; background: #e8eeeb; }
+    .splash-progress span { display: block; width: 100%; height: 100%; background: var(--blue); transform: scaleX(1); transform-origin: left; }
+    .splash-skip {
+      margin-top: 14px;
+      padding: 9px 16px;
+      border: 1px solid #cbd9d7;
+      border-radius: 5px;
+      color: var(--ink);
+      background: white;
+      font-weight: 700;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .splash-loader { animation-duration: 2.5s; }
+    }
+
     @media (max-width: 900px) {
       .nav-links { display: none; }
       .hero-inner { grid-template-columns: 1fr; padding-top: 40px; }
@@ -406,6 +455,21 @@
   </style>
 </head>
 <body>
+  <div class="splash-screen" id="splashScreen" role="dialog" aria-modal="true" aria-labelledby="splashTitle">
+    <div class="splash-card">
+      <div class="splash-loader" aria-hidden="true"></div>
+      <h2 id="splashTitle">🇺🇿 18-noyabr — Bayroq kuni</h2>
+      <p><strong>Andijon shahar 35-DIM o‘quvchilari loyihasi</strong></p>
+      <div class="credit-links">
+        <p>💡 <strong>G‘oya muallifi:</strong> <a href="https://t.me/Alxorazmiy_02" target="_blank" rel="noopener noreferrer">@Alxorazmiy_02</a></p>
+        <p>💻 <strong>Yaratuvchi:</strong> <a href="https://t.me/dasturchi_8" target="_blank" rel="noopener noreferrer">@dasturchi_8</a></p>
+      </div>
+      <p>Sayt ochilmoqda... <span id="splashCountdown">5</span>s</p>
+      <div class="splash-progress" aria-hidden="true"><span id="splashProgress"></span></div>
+      <button class="splash-skip" id="skipSplash" type="button">Saytga o‘tish</button>
+    </div>
+  </div>
+
   <header class="hero" id="bosh">
     <nav class="nav" aria-label="Asosiy menyu">
       <a class="brand" href="#bosh">
@@ -596,8 +660,15 @@
 
   <footer>
     <div class="footer-inner">
-      <strong>18 NOYABR — BAYROQ KUNI</strong>
-      <span>Mustaqil O‘zbekiston</span>
+      <div>
+        <strong>18 NOYABR — BAYROQ KUNI</strong><br>
+        <span>Andijon shahar 35-DIM o‘quvchilari loyihasi</span>
+      </div>
+      <div>
+        <span>G‘oya muallifi: <a href="https://t.me/Alxorazmiy_02" target="_blank" rel="noopener noreferrer">@Alxorazmiy_02</a></span><br>
+        <span>Yaratuvchi: <a href="https://t.me/dasturchi_8" target="_blank" rel="noopener noreferrer">@dasturchi_8</a></span>
+      </div>
+      <a href="https://bayroq-kuni.vercel.app/" target="_blank" rel="noopener noreferrer">bayroq-kuni.vercel.app</a>
     </div>
   </footer>
 
@@ -785,6 +856,27 @@
 
     renderQuiz();
     startTimer();
+  </script>
+  <script>
+    const splashScreen = document.getElementById("splashScreen");
+    const splashCountdown = document.getElementById("splashCountdown");
+    const splashProgress = document.getElementById("splashProgress");
+    let splashTimeLeft = 5;
+
+    function closeSplash() {
+      clearInterval(splashTimer);
+      splashScreen.classList.add("is-hidden");
+      window.setTimeout(() => splashScreen.remove(), 650);
+    }
+
+    const splashTimer = window.setInterval(() => {
+      splashTimeLeft--;
+      splashCountdown.textContent = splashTimeLeft;
+      splashProgress.style.transform = `scaleX(${splashTimeLeft / 5})`;
+      if (splashTimeLeft <= 0) closeSplash();
+    }, 1000);
+
+    document.getElementById("skipSplash").addEventListener("click", closeSplash);
   </script>
 </body>
 </html>
