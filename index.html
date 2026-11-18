@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#061b3a">
+  <title>18 Noyabr — O‘zbekiston bayrog‘i kuni</title>
+  <style>
+    :root {
+      --blue: #0099b5;
+      --blue-dark: #061b3a;
+      --blue-bright: #13b6d7;
+      --red: #ed1c24;
+      --green: #2ba84a;
+      --cream: #f6f3ea;
+      --ink: #09213d;
+      --white: #fff;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      color: var(--ink);
+      background: var(--cream);
+    }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      align-items: center;
+      overflow: hidden;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 72% 38%, rgba(23, 174, 210, .24), transparent 22rem),
+        linear-gradient(135deg, #06152e 0%, #093052 58%, #08758b 100%);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: .11;
+      background-image:
+        linear-gradient(rgba(255,255,255,.8) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.8) 1px, transparent 1px);
+      background-size: 52px 52px;
+      mask-image: linear-gradient(to bottom, black, transparent 85%);
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(2px);
+      opacity: .55;
+      animation: drift 12s ease-in-out infinite alternate;
+    }
+    .orb.one { width: 180px; height: 180px; right: 6%; top: 8%; background: rgba(19,182,215,.16); }
+    .orb.two { width: 90px; height: 90px; left: 7%; bottom: 12%; background: rgba(237,28,36,.12); animation-delay: -4s; }
+
+    @keyframes drift {
+      to { transform: translate3d(20px, 35px, 0) scale(1.08); }
+    }
+
+    .nav {
+      position: absolute;
+      z-index: 20;
+      top: 0;
+      left: 50%;
+      width: min(1180px, calc(100% - 48px));
+      height: 88px;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: white;
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 50%;
+      background: rgba(255,255,255,.08);
+    }
+    .brand-mark::before {
+      content: "";
+      width: 23px;
+      height: 23px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fff 0 8%, #99d8e7 9% 11%, transparent 12%);
+      border: 2px solid #fff;
+    }
+    .nav-links { display: flex; gap: 30px; }
+    .nav-links a {
+      color: rgba(255,255,255,.78);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      transition: .2s;
+    }
+    .nav-links a:hover { color: white; }
+
+    .hero-inner {
+      position: relative;
+      z-index: 3;
+      width: min(1180px, calc(100% - 48px));
+      margin: 88px auto 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 54px;
+      min-height: calc(100vh - 88px);
+      padding: 60px 0 78px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      color: #72dced;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 36px; height: 2px; background: #72dced; }
+    h1 {
+      max-width: 620px;
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(58px, 7vw, 96px);
+      line-height: .92;
+      letter-spacing: -.055em;
+    }
+    h1 em { display: block; color: #83def0; font-style: normal; }
+    .hero-copy {
+      max-width: 540px;
+      margin: 28px 0 32px;
+      color: rgba(255,255,255,.72);
+      font-size: 18px;
+      line-height: 1.75;
+    }
+    .hero-actions { display: flex; gap: 12px; }
+    .primary, .secondary {
+      height: 52px;
+      padding: 0 22px;
+      border-radius: 4px;
+      font-weight: 800;
+      transition: transform .2s, background .2s;
+    }
+    .primary { border: 0; color: white; background: var(--red); box-shadow: 0 12px 30px rgba(237,28,36,.22); }
+    .secondary { border: 1px solid rgba(255,255,255,.22); color: white; background: rgba(255,255,255,.06); }
+    .primary:hover, .secondary:hover { transform: translateY(-3px); }
+
+    .flag-stage {
+      position: relative;
+      perspective: 900px;
+      animation: stageIn 1s .15s both;
+    }
+    @keyframes stageIn {
+      from { opacity: 0; transform: translateX(40px) rotateY(-8deg); }
+    }
+    .flag-card {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1.58;
+      overflow: hidden;
+      border-radius: 5px;
+      background: white;
+      box-shadow: 0 32px 80px rgba(0,0,0,.32);
+      transform: rotateY(-7deg) rotateZ(1deg);
+      transition: transform .25s ease-out;
+    }
+    .flag-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, transparent 38%, rgba(255,255,255,.16) 50%, transparent 62%);
+      transform: translateX(-100%);
+      animation: shine 5s 1.2s infinite;
+    }
+    @keyframes shine { 55%,100% { transform: translateX(100%); } }
+    .stripe { height: 33.333%; position: relative; }
+    .stripe.blue { background: #0099b5; }
+    .stripe.white { background: #fff; }
+    .stripe.green { background: #2ba84a; }
+    .stripe.white::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 10px;
+      transform: translateY(-50%);
+      background: var(--red);
+    }
+    .crescent {
+      position: absolute;
+      z-index: 2;
+      top: 13%;
+      left: 7%;
+      width: 62px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 0 0 1px rgba(0,0,0,.02);
+    }
+    .crescent::after {
+      content: "";
+      position: absolute;
+      width: 54px;
+      aspect-ratio: 1;
+      left: 18px;
+      top: -7px;
+      border-radius: 50%;
+      background: #0099b5;
+    }
+    .stars {
+      position: absolute;
+      z-index: 3;
+      top: 9%;
+      left: 26%;
+      width: 105px;
+      height: 94px;
+      color: white;
+      font-size: 15px;
+      line-height: 20px;
+      text-align: center;
+      transform: perspective(200px) rotateY(-5deg);
+    }
+    .star-row { display: flex; justify-content: center; gap: 8px; height: 19px; }
+    .star-row:nth-child(2) { padding-left: 12px; }
+    .star-row:nth-child(3) { padding-left: 24px; }
+    .star-row:nth-child(4) { padding-left: 36px; }
+    .star-row:nth-child(5) { padding-left: 48px; }
+    .star-row span { filter: drop-shadow(0 1px 1px rgba(0,0,0,.12)); }
+
+    .date-plaque {
+      position: absolute;
+      right: -20px;
+      bottom: -34px;
+      width: 150px;
+      height: 150px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 50%;
+      color: white;
+      background: rgba(6,27,58,.94);
+      box-shadow: 0 18px 40px rgba(0,0,0,.25);
+    }
+    .date-plaque strong { display: block; font-family: Georgia, serif; font-size: 52px; line-height: .85; }
+    .date-plaque span { display: block; margin-top: 8px; font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+
+    section { padding: 110px 24px; }
+    .section-inner { width: min(1180px, 100%); margin: 0 auto; }
+    .section-label { color: #16879a; font-size: 12px; font-weight: 900; letter-spacing: .18em; text-transform: uppercase; }
+    .section-title {
+      margin: 12px 0 48px;
+      font-family: Georgia, serif;
+      font-size: clamp(38px, 5vw, 64px);
+      line-height: 1;
+      letter-spacing: -.04em;
+    }
+
+    .meaning { background: #f9f7ef; }
+    .meaning-grid { display: grid; grid-template-columns: 1.08fr .92fr; gap: 68px; align-items: center; }
+    .meaning-copy p { max-width: 590px; color: #536476; font-size: 17px; line-height: 1.85; }
+    .symbol-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 32px; }
+    .symbol {
+      min-height: 155px;
+      padding: 22px;
+      border: 1px solid #dde3df;
+      border-radius: 6px;
+      background: white;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .symbol:hover { transform: translateY(-6px); box-shadow: 0 18px 36px rgba(9,33,61,.08); }
+    .symbol-icon { width: 42px; height: 42px; display: grid; place-items: center; margin-bottom: 18px; border-radius: 50%; color: white; font-weight: 900; }
+    .symbol:nth-child(1) .symbol-icon { background: var(--blue); }
+    .symbol:nth-child(2) .symbol-icon { background: var(--red); }
+    .symbol:nth-child(3) .symbol-icon { background: var(--green); }
+    .symbol h3 { margin: 0 0 8px; font-size: 16px; }
+    .symbol p { margin: 0; color: #718090; font-size: 13px; line-height: 1.55; }
+
+    .memory {
+      min-height: 520px;
+      display: grid;
+      place-items: center;
+      color: white;
+      text-align: center;
+      background:
+        linear-gradient(rgba(6,27,58,.82), rgba(6,27,58,.88)),
+        repeating-linear-gradient(120deg, #082b4d 0 40px, #0d3c60 41px 42px);
+    }
+    .memory blockquote {
+      max-width: 860px;
+      margin: 0 auto;
+      font-family: Georgia, serif;
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 1.12;
+      letter-spacing: -.03em;
+    }
+    .memory blockquote span { color: #72dced; }
+    .memory p { margin: 24px 0 0; color: rgba(255,255,255,.62); letter-spacing: .16em; font-size: 12px; font-weight: 800; text-transform: uppercase; }
+
+    .timeline-section { background: white; }
+    .timeline { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 20px;
+      left: 4%;
+      right: 4%;
+      height: 2px;
+      background: #dce5e5;
+    }
+    .event { position: relative; padding-top: 62px; }
+    .event-dot {
+      position: absolute;
+      z-index: 2;
+      top: 10px;
+      left: 0;
+      width: 22px;
+      height: 22px;
+      border: 6px solid white;
+      border-radius: 50%;
+      background: #16879a;
+      box-shadow: 0 0 0 2px #16879a;
+    }
+    .event-year { color: #16879a; font-size: 13px; font-weight: 900; letter-spacing: .12em; }
+    .event h3 { margin: 10px 0 8px; font-family: Georgia, serif; font-size: 21px; }
+    .event p { margin: 0; color: #718090; line-height: 1.65; font-size: 14px; }
+
+    .quiz-section { background: #edf4f2; }
+    .quiz-layout { display: grid; grid-template-columns: .75fr 1.25fr; gap: 60px; align-items: center; }
+    .quiz-layout .section-title { margin-bottom: 18px; }
+    .quiz-layout p { color: #627284; line-height: 1.75; }
+    .quiz-card {
+      min-height: 290px;
+      padding: 34px;
+      border: 1px solid #d6e1df;
+      border-radius: 8px;
+      background: white;
+      box-shadow: 0 18px 50px rgba(9,33,61,.07);
+    }
+    .progress { height: 5px; margin-bottom: 28px; border-radius: 10px; background: #edf1ef; overflow: hidden; }
+    .progress-bar { width: 33.333%; height: 100%; background: var(--blue); transition: width .35s; }
+    .question { margin: 0 0 20px; font-family: Georgia, serif; font-size: 28px; }
+    .answers { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .answer {
+      min-height: 54px;
+      border: 1px solid #dbe4e2;
+      border-radius: 5px;
+      color: var(--ink);
+      background: #fafcfb;
+      font-weight: 700;
+      transition: .18s;
+    }
+    .answer:hover { border-color: #16879a; background: #f1faf9; }
+    .answer.correct { border-color: #2ba84a; background: #eaf7ed; }
+    .answer.wrong { border-color: #ed1c24; background: #fff0f0; }
+    .quiz-status { min-height: 24px; margin-top: 16px; color: #627284; font-size: 14px; }
+    .participant-form {
+      display: grid;
+      gap: 12px;
+    }
+    .participant-form label {
+      color: #627284;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .participant-form input {
+      width: 100%;
+      height: 52px;
+      margin-top: 7px;
+      padding: 0 15px;
+      border: 1px solid #dbe4e2;
+      border-radius: 5px;
+      color: var(--ink);
+      background: #fafcfb;
+      outline: none;
+    }
+    .participant-form input:focus { border-color: #16879a; box-shadow: 0 0 0 3px rgba(22,135,154,.10); }
+    .start-button, .certificate-button {
+      min-height: 52px;
+      border: 0;
+      border-radius: 5px;
+      color: white;
+      background: var(--red);
+      font-weight: 800;
+    }
+    .certificate-button { margin-top: 14px; background: #16879a; }
+    .certificate-wrap { display: none; margin-top: 18px; }
+    .certificate-wrap canvas {
+      display: block;
+      width: 100%;
+      max-height: 360px;
+      border: 1px solid #dbe4e2;
+      border-radius: 5px;
+      background: white;
+    }
+    .quiz-topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .quiz-timer {
+      display: none;
+      margin-bottom: 14px;
+      color: #ed1c24;
+      font-weight: 900;
+      text-align: right;
+    }
+    .leaderboard {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid #e5ecea;
+    }
+    .leaderboard h3 { margin: 0 0 12px; font-family: Georgia, serif; }
+    .ranking-row {
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr) 70px 72px;
+      align-items: center;
+      gap: 8px;
+      min-height: 42px;
+      border-bottom: 1px solid #edf1ef;
+      font-size: 13px;
+    }
+    .ranking-row:first-of-type { color: #627284; font-weight: 800; }
+    .ranking-place {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: white;
+      background: #16879a;
+      font-weight: 900;
+    }
+    .ranking-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    footer {
+      padding: 32px 24px;
+      color: rgba(255,255,255,.72);
+      background: #061b3a;
+    }
+    .footer-inner { width: min(1180px, 100%); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .footer-inner strong { color: white; }
+
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hero-inner { grid-template-columns: 1fr; padding-top: 40px; }
+      .hero { min-height: auto; }
+      .hero-inner { margin-top: 88px; }
+      .flag-stage { max-width: 620px; width: 92%; margin: 15px auto 45px; }
+      .meaning-grid, .quiz-layout { grid-template-columns: 1fr; }
+      .timeline { grid-template-columns: 1fr 1fr; }
+      .timeline::before { display: none; }
+      .event { padding-top: 42px; }
+      .event-dot { top: 0; }
+    }
+    @media (max-width: 580px) {
+      .nav { width: calc(100% - 32px); }
+      .hero-inner { width: calc(100% - 32px); }
+      h1 { font-size: 54px; }
+      .hero-copy { font-size: 16px; }
+      .hero-actions { flex-direction: column; }
+      .primary, .secondary { width: 100%; }
+      .flag-stage { width: 100%; }
+      .crescent { width: 42px; }
+      .crescent::after { width: 36px; left: 12px; top: -5px; }
+      .stars { transform: scale(.75); transform-origin: top left; }
+      .date-plaque { width: 110px; height: 110px; right: -8px; bottom: -28px; }
+      .date-plaque strong { font-size: 38px; }
+      section { padding: 82px 16px; }
+      .symbol-list { grid-template-columns: 1fr; }
+      .symbol { min-height: 120px; }
+      .timeline { grid-template-columns: 1fr; }
+      .answers { grid-template-columns: 1fr; }
+      .quiz-card { padding: 24px 18px; }
+      .footer-inner { flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero" id="bosh">
+    <nav class="nav" aria-label="Asosiy menyu">
+      <a class="brand" href="#bosh">
+        <span class="brand-mark"></span>
+        <span>O‘ZBEKISTON</span>
+      </a>
+      <div class="nav-links">
+        <a href="#maʼno">Maʼnosi</a>
+        <a href="#tarix">Tarix</a>
+        <a href="#savol">Bilimingizni sinang</a>
+      </div>
+    </nav>
+
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+
+    <div class="hero-inner">
+      <main>
+        <div class="eyebrow">Davlat ramzi</div>
+        <h1>Bayroq <em>kunimiz</em></h1>
+        <p class="hero-copy">
+          18 noyabr — o‘z Vatanimizning ko‘k osmoniga yarashgan
+          O‘zbekiston Respublikasi Davlat bayrog‘ining qabul qilingan kuni.
+        </p>
+        <div class="hero-actions">
+          <button class="primary" onclick="document.querySelector('#maʼno').scrollIntoView()">Bayroqni kashf eting</button>
+          <button class="secondary" onclick="document.querySelector('#savol').scrollIntoView()">Tezkor savol</button>
+        </div>
+      </main>
+
+      <div class="flag-stage" id="flagStage">
+        <div class="flag-card" id="flagCard" aria-label="O‘zbekiston Respublikasi Davlat bayrog‘i">
+          <div class="stripe blue"></div>
+          <div class="stripe white"></div>
+          <div class="stripe green"></div>
+          <div class="crescent"></div>
+          <div class="stars" aria-hidden="true">
+            <div class="star-row"><span>★</span></div>
+            <div class="star-row"><span>★</span><span>★</span></div>
+            <div class="star-row"><span>★</span><span>★</span><span>★</span></div>
+            <div class="star-row"><span>★</span><span>★</span><span>★</span><span>★</span></div>
+            <div class="star-row"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          </div>
+        </div>
+        <div class="date-plaque"><div><strong>18</strong><span>Noyabr</span></div></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="meaning" id="maʼno">
+    <div class="section-inner meaning-grid">
+      <div class="meaning-copy reveal">
+        <div class="section-label">Davlat ramzi</div>
+        <h2 class="section-title">Har bir rang — maʼno.</h2>
+        <p>
+          Davlat bayrog‘ida ko‘k rang osmon va suv, oq rang tinchlik va poklik,
+          yashil rang tabiat va yangilanish ramzi hisoblanadi. Qizil chiziqlar
+          hayot kuchini va barcha xalq kuchlarini ifodalaydi.
+        </p>
+        <p>
+          Hilol mustaqil respublikamizning mustaqil hayotini, 12 yulduz esa
+          tarixiy ildizlar va istiqlol yo‘lidagi bosqichlarni anglatadi.
+        </p>
+      </div>
+      <div class="symbol-list reveal">
+        <article class="symbol">
+          <div class="symbol-icon">H</div>
+          <h3>Havorang</h3>
+          <p>Osmon, soflik va ezgulikni ramzi.</p>
+        </article>
+        <article class="symbol">
+          <div class="symbol-icon">P</div>
+          <h3>Poklik</h3>
+          <p>Oq rang tinchlik va adolat timsoli.</p>
+        </article>
+        <article class="symbol">
+          <div class="symbol-icon">Y</div>
+          <h3>Yangilik</h3>
+          <p>Yashil rang tabiiy boylik va umid.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="memory">
+    <div class="section-inner reveal">
+      <blockquote>“Bayrog‘imiz — <span>mustaqillik</span> timsoli.”</blockquote>
+      <p>O‘zbekiston Respublikasining Davlat bayrog‘i</p>
+    </div>
+  </section>
+
+  <section class="timeline-section" id="tarix">
+    <div class="section-inner">
+      <div class="section-label reveal">Muhim lahzalar</div>
+      <h2 class="section-title reveal">Qisqa tarix</h2>
+      <div class="timeline">
+        <article class="event reveal">
+          <span class="event-dot"></span>
+          <div class="event-year">1991 / 18 NOYABR</div>
+          <h3>Bayroq qabul qilindi</h3>
+          <p>O‘zbekiston Respublikasi Oliy Kengashi bayroq to‘g‘risidagi qonunni tasdiqladi.</p>
+        </article>
+        <article class="event reveal">
+          <span class="event-dot"></span>
+          <div class="event-year">1991 / 31 AVGUST</div>
+          <h3>Mustaqillik eʼlon qilindi</h3>
+          <p>Yangi davlatning boshqaruvi va ramzlari uchun tarixiy poydevor yaratildi.</p>
+        </article>
+        <article class="event reveal">
+          <span class="event-dot"></span>
+          <div class="event-year">1992 / 2 IYUL</div>
+          <h3>Yangi Konstitusiya</h3>
+          <p>Davlat tuzilmasi mustahkamlandi va milliy ramzlarning mavqei belgilandi.</p>
+        </article>
+        <article class="event reveal">
+          <span class="event-dot"></span>
+          <div class="event-year">BUGUN</div>
+          <h3>Faxr va g‘urur</h3>
+          <p>Bayroq butun mamlakatda mustaqil va erkin yashash ramzi sifatida ulug‘lanmoqda.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="quiz-section" id="savol">
+    <div class="section-inner quiz-layout">
+      <div class="reveal">
+        <div class="section-label">Mini viktorina</div>
+        <h2 class="section-title">10 savollik sinov</h2>
+        <p>Ismingiz va sinfingizni kiriting. Barcha savollarga javob bergach, natija bo‘yicha rasmli sertifikat yaratiladi.</p>
+      </div>
+      <div class="quiz-card reveal" id="quizCard">
+        <div class="quiz-topline">
+          <div class="progress" style="flex:1"><div class="progress-bar" id="progressBar"></div></div>
+          <div class="quiz-timer" id="quizTimer">Vaqt: 02:00</div>
+        </div>
+        <div id="startScreen">
+          <h3 class="question">Sertifikat uchun maʼlumot</h3>
+          <form class="participant-form" id="participantForm">
+            <label>
+              Ism va familiya
+              <input id="participantName" type="text" maxlength="50" placeholder="Masalan: Azizbek Karimov" required>
+            </label>
+            <label>
+              Sinf yoki guruh
+              <input id="participantClass" type="text" maxlength="30" placeholder="Masalan: 8-“A”" required>
+            </label>
+            <button class="start-button" type="submit">Viktorinani boshlash</button>
+          </form>
+        </div>
+        <div id="quizScreen" style="display:none">
+          <h3 class="question" id="question"></h3>
+          <div class="answers" id="answers"></div>
+          <div class="quiz-status" id="quizStatus"></div>
+        </div>
+        <div class="certificate-wrap" id="certificateWrap">
+          <canvas id="certificateCanvas" width="1200" height="850" aria-label="Sertifikat"></canvas>
+          <button class="certificate-button" id="downloadCertificate" type="button">Sertifikatni yuklab olish</button>
+        </div>
+        <div class="leaderboard" id="leaderboard">
+          <h3>Reyting jadvali</h3>
+          <div id="rankingRows"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <strong>18 NOYABR — BAYROQ KUNI</strong>
+      <span>Mustaqil O‘zbekiston</span>
+    </div>
+  </footer>
+
+  <script>
+    const flagCard = document.getElementById("flagCard");
+    const flagStage = document.getElementById("flagStage");
+
+    flagStage.addEventListener("mousemove", (event) => {
+      const rect = flagStage.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      flagCard.style.transform = `rotateY(${-7 + x * 10}deg) rotateX(${y * -8}deg) rotateZ(1deg)`;
+    });
+    flagStage.addEventListener("mouseleave", () => {
+      flagCard.style.transform = "rotateY(-7deg) rotateZ(1deg)";
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add("visible");
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
+
+    const quiz = [
+      ["O‘zbekiston Davlat bayrog‘i qachon qabul qilingan?", ["31 avgust 1991", "18 noyabr 1991", "2 iyul 1992", "1 sentyabr 1991"], 1],
+      ["Bayroqdagi hilol nimalarni anglatadi?", ["Mustaqillikni", "Tinchlikni", "Yangilikni", "Quyoshni"], 0],
+      ["Bayroqda nechta yulduz tasvirlangan?", ["8", "10", "12", "15"], 2],
+      ["Bayroqdagi ko‘k rang nimani ifodalaydi?", ["Osmon va suvni", "Yer rangini", "O‘tni", "Qishni"], 0],
+      ["Oq rang bayroqda nimani anglatadi?", ["Jasoratni", "Poklik va tinchlikni", "Quyoshni", "Tabiatni"], 1],
+      ["Yashil rang qanday maʼnoga ega?", ["Yangilanish va tabiat", "Adolat", "Tinchlik", "Umr"], 0],
+      ["Qizil chiziqlar nimani anglatadi?", ["Hayot kuchini", "G‘alabani", "Osmonni", "Suvni"], 0],
+      ["Bayroqdagi davlat ramzlari qaysi hujjatda belgilangan?", ["Konstitutsiyada", "Prezident farmonida", "Davlat bayrog‘i to‘g‘risidagi qonunda", "Taʼlim kodeksida"], 2],
+      ["Bayroqning markaziy oq chizig‘ida nimalar bor?", ["Hilol va yulduzlar", "Gerb", "Xarita", "Kitob"], 0],
+      ["Bayroq kuni qaysi kun nishonlanadi?", ["18 noyabr", "31 avgust", "1 sentyabr", "9 may"], 0]
+    ];
+
+    let quizIndex = 0;
+    let score = 0;
+    let participantName = "";
+    let participantClass = "";
+    let elapsedSeconds = 0;
+    let quizTimer = null;
+    let quizFinished = false;
+    const QUIZ_LIMIT_SECONDS = 120;
+    const leaderboardKey = "bayroq-kuni-leaderboard";
+    const submittedKey = "bayroq-kuni-submitted";
+    const participantForm = document.getElementById("participantForm");
+    const startScreen = document.getElementById("startScreen");
+    const quizScreen = document.getElementById("quizScreen");
+    const certificateWrap = document.getElementById("certificateWrap");
+    const quizTimerEl = document.getElementById("quizTimer");
+    const questionEl = document.getElementById("question");
+    const answersEl = document.getElementById("answers");
+    const statusEl = document.getElementById("quizStatus");
+    const progressEl = document.getElementById("progressBar");
+
+    participantForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      participantName = document.getElementById("participantName").value.trim();
+      participantClass = document.getElementById("participantClass").value.trim();
+      if (!participantName || !participantClass) return;
+      if (localStorage.getItem(submittedKey)) {
+        showAlreadySubmitted();
+        return;
+      }
+      startScreen.style.display = "none";
+      quizScreen.style.display = "block";
+      quizTimerEl.style.display = "block";
+      progressEl.style.width = "10%";
+      startTimer();
+      renderQuiz();
+    });
+
+    function renderQuiz() {
+      const [question, answers, correct] = quiz[quizIndex];
+      questionEl.textContent = `${quizIndex + 1}. ${question}`;
+      answersEl.innerHTML = "";
+      statusEl.textContent = "";
+      progressEl.style.width = `${((quizIndex + 1) / quiz.length) * 100}%`;
+
+      answers.forEach((answer, index) => {
+        const button = document.createElement("button");
+        button.className = "answer";
+        button.textContent = answer;
+        button.onclick = () => selectAnswer(button, index, correct);
+        answersEl.appendChild(button);
+      });
+    }
+
+    function startTimer() {
+      let remaining = QUIZ_LIMIT_SECONDS;
+      elapsedSeconds = 0;
+      quizTimerEl.textContent = "Vaqt: 02:00";
+      quizTimer = setInterval(() => {
+        remaining--;
+        elapsedSeconds = QUIZ_LIMIT_SECONDS - remaining;
+        const minutes = Math.floor(remaining / 60);
+        const seconds = remaining % 60;
+        quizTimerEl.textContent = `Vaqt: ${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+        if (remaining <= 0) {
+          clearInterval(quizTimer);
+          elapsedSeconds = QUIZ_LIMIT_SECONDS;
+          showResult();
+        }
+      }, 1000);
+    }
+
+    function getLeaderboard() {
+      try {
+        return JSON.parse(localStorage.getItem(leaderboardKey) || "[]");
+      } catch {
+        return [];
+      }
+    }
+
+    async function saveResult() {
+      if (localStorage.getItem(submittedKey)) return;
+      const entries = getLeaderboard();
+      entries.push({
+        name: participantName,
+        className: participantClass,
+        score,
+        time: elapsedSeconds
+      });
+      entries.sort((a, b) => b.score - a.score || a.time - b.time);
+      localStorage.setItem(leaderboardKey, JSON.stringify(entries.slice(0, 50)));
+      localStorage.setItem(submittedKey, JSON.stringify({
+        name: participantName,
+        className: participantClass,
+        score,
+        time: elapsedSeconds
+      }));
+      try {
+        await fetch("/api/results", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: participantName,
+            className: participantClass,
+            score,
+            time: elapsedSeconds
+          })
+        });
+      } catch {
+        // Reyting local saqlanadi, global server vaqtinchalik ishlamasa ham sayt ishlaydi.
+      }
+      await renderLeaderboard();
+    }
+
+    async function renderLeaderboard() {
+      let entries = getLeaderboard();
+      try {
+        const response = await fetch("/api/results", { cache: "no-store" });
+        if (response.ok) {
+          const data = await response.json();
+          if (Array.isArray(data.results)) entries = data.results;
+        }
+      } catch {
+        // Mahalliy reyting zaxira sifatida qoladi.
+      }
+      const rows = document.getElementById("rankingRows");
+      if (!entries.length) {
+        rows.innerHTML = '<div class="ranking-row"><span></span><span>Hozircha natija yo‘q</span><span>Ball</span><span>Vaqt</span></div>';
+        return;
+      }
+      rows.innerHTML = entries.slice(0, 10).map((entry, index) => `
+        <div class="ranking-row">
+          <span class="ranking-place">${index + 1}</span>
+          <span class="ranking-name" title="${escapeHtml(entry.name)}">${escapeHtml(entry.name)}</span>
+          <strong>${entry.score}/10</strong>
+          <span>${formatTime(entry.time)}</span>
+        </div>
+      `).join("");
+    }
+
+    function formatTime(totalSeconds) {
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      return `${minutes}:${String(seconds).padStart(2, "0")}`;
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (character) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      })[character]);
+    }
+
+    function showAlreadySubmitted() {
+      const submission = JSON.parse(localStorage.getItem(submittedKey) || "{}");
+      participantName = submission.name || "Ishtirokchi";
+      participantClass = submission.className || "";
+      score = submission.score || 0;
+      elapsedSeconds = submission.time || QUIZ_LIMIT_SECONDS;
+      startScreen.style.display = "none";
+      quizScreen.style.display = "none";
+      certificateWrap.style.display = "block";
+      progressEl.style.width = "100%";
+      quizTimerEl.style.display = "block";
+      quizTimerEl.textContent = "Savolga javob topshirilgan";
+      drawCertificate();
+      renderLeaderboard();
+    }
+
+    function selectAnswer(button, index, correct) {
+      const buttons = [...answersEl.children];
+      buttons.forEach((item) => item.disabled = true);
+      if (index === correct) {
+        button.classList.add("correct");
+        score++;
+        statusEl.textContent = "To‘g‘ri javob!";
+      } else {
+        button.classList.add("wrong");
+        buttons[correct].classList.add("correct");
+        statusEl.textContent = "Xato javob — to‘g‘ri javob ko‘rsatildi.";
+      }
+
+      setTimeout(() => {
+        quizIndex++;
+        if (quizIndex < quiz.length) {
+          renderQuiz();
+        } else {
+          showResult();
+        }
+      }, 800);
+    }
+
+    function showResult() {
+      if (quizFinished) return;
+      quizFinished = true;
+      clearInterval(quizTimer);
+      quizScreen.style.display = "none";
+      certificateWrap.style.display = "block";
+      progressEl.style.width = "100%";
+      quizTimerEl.textContent = `Vaqt: ${formatTime(elapsedSeconds)}`;
+      saveResult();
+      drawCertificate();
+      renderLeaderboard();
+    }
+
+    function drawCertificate() {
+      const canvas = document.getElementById("certificateCanvas");
+      const ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#fffdf7";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.strokeStyle = "#16879a";
+      ctx.lineWidth = 18;
+      ctx.strokeRect(28, 28, 1144, 794);
+      ctx.strokeStyle = "#d4b36a";
+      ctx.lineWidth = 3;
+      ctx.strokeRect(48, 48, 1104, 754);
+
+      ctx.fillStyle = "#0099b5";
+      ctx.fillRect(48, 48, 1104, 22);
+      ctx.fillStyle = "#ed1c24";
+      ctx.fillRect(48, 70, 1104, 8);
+      ctx.fillStyle = "#2ba84a";
+      ctx.fillRect(48, 78, 1104, 22);
+
+      ctx.fillStyle = "#09213d";
+      ctx.textAlign = "center";
+      ctx.font = "700 34px Georgia";
+      ctx.fillText("O‘ZBEKISTON RESPUBLIKASI", 600, 150);
+      ctx.font = "700 82px Georgia";
+      ctx.fillStyle = "#16879a";
+      ctx.fillText("SERTIFIKAT", 600, 260);
+      ctx.font = "32px Segoe UI";
+      ctx.fillStyle = "#627284";
+      ctx.fillText("Bayroq kuni viktorinasi ishtirokchisiga", 600, 330);
+
+      ctx.font = "italic 700 58px Georgia";
+      ctx.fillStyle = "#09213d";
+      ctx.fillText(participantName, 600, 420);
+      ctx.beginPath();
+      ctx.moveTo(320, 445);
+      ctx.lineTo(880, 445);
+      ctx.strokeStyle = "#d4b36a";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.font = "700 32px Segoe UI";
+      ctx.fillStyle = "#09213d";
+      ctx.fillText(`${participantClass} | Natija: ${score}/${quiz.length}`, 600, 510);
+      ctx.font = "29px Segoe UI";
+      ctx.fillStyle = "#627284";
+      ctx.fillText(score >= 7 ? "Taqdirlash darajasi: A’lo" : score >= 5 ? "Taqdirlash darajasi: Yaxshi" : "Taqdirlash darajasi: Ishtirok", 600, 565);
+
+      ctx.font = "24px Segoe UI";
+      ctx.fillText("18 noyabr — O‘zbekiston bayrog‘i kuni", 600, 650);
+      ctx.fillText(new Date().toLocaleDateString("uz-UZ"), 600, 695);
+    }
+
+    document.getElementById("downloadCertificate").addEventListener("click", () => {
+      const canvas = document.getElementById("certificateCanvas");
+      const link = document.createElement("a");
+      const safeName = participantName.replace(/[^a-zA-Z0-9\u0400-\u04FF]+/g, "-").replace(/^-|-$/g, "") || "ishtirokchi";
+      link.download = `Bayroq-kuni-sertifikati-${safeName}.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    });
+
+    renderLeaderboard();
+    if (localStorage.getItem(submittedKey)) {
+      showAlreadySubmitted();
+    }
+  </script>
+</body>
+</html>
