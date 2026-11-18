@@ -2,7 +2,7 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 
-const host = "127.0.0.1";
+const host = "0.0.0.0";
 const port = Number(process.env.PORT || 4173);
 const root = __dirname;
 const resultsFile = path.join(root, "results.json");
@@ -23,7 +23,8 @@ function writeResults(results) {
 function sendJson(response, status, value) {
   response.writeHead(status, {
     "Content-Type": "application/json; charset=utf-8",
-    "Cache-Control": "no-store"
+    "Cache-Control": "no-store",
+    "Access-Control-Allow-Credentials": "true"
   });
   response.end(JSON.stringify(value));
 }
@@ -38,7 +39,7 @@ function getCookie(request, name) {
 }
 
 function setCookie(response, name, value) {
-  response.setHeader("Set-Cookie", `${name}=${encodeURIComponent(value)}; Path=/; HttpOnly; SameSite=Lax; Max-Age=31536000`);
+  response.setHeader("Set-Cookie", `${name}=${encodeURIComponent(value)}; Path=/; HttpOnly; SameSite=None; Secure; Max-Age=31536000`);
 }
 
 function getContentType(filePath) {
@@ -56,6 +57,22 @@ function getContentType(filePath) {
 
 const server = http.createServer((request, response) => {
   const url = new URL(request.url, `http://${request.headers.host || "localhost"}`);
+  const origin = request.headers.origin;
+  const allowedOrigin = process.env.ALLOWED_ORIGIN;
+
+  if (allowedOrigin && origin === allowedOrigin) {
+    response.setHeader("Access-Control-Allow-Origin", allowedOrigin);
+    response.setHeader("Vary", "Origin");
+  }
+  response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  response.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  response.setHeader("Access-Control-Allow-Credentials", "true");
+
+  if (request.method === "OPTIONS") {
+    response.writeHead(204);
+    response.end();
+    return;
+  }
 
   if (request.method === "GET" && url.pathname === "/api/results") {
     const results = readResults()

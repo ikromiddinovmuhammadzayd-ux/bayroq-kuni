@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#061b3a">
+  <meta name="bayroq-api-url" content="">
   <title>18 Noyabr — O‘zbekiston bayrog‘i kuni</title>
   <style>
     :root {
@@ -723,6 +724,8 @@
     const QUIZ_LIMIT_SECONDS = 120;
     const leaderboardKey = "bayroq-kuni-leaderboard";
     const submittedKey = "bayroq-kuni-submitted";
+    const apiUrl = (document.querySelector('meta[name="bayroq-api-url"]')?.content || "").replace(/\/$/, "");
+    const resultsApiUrl = `${apiUrl}/api/results`;
     const participantForm = document.getElementById("participantForm");
     const startScreen = document.getElementById("startScreen");
     const quizScreen = document.getElementById("quizScreen");
@@ -810,9 +813,10 @@
         time: elapsedSeconds
       }));
       try {
-        await fetch("/api/results", {
+        await fetch(resultsApiUrl, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify({
             name: participantName,
             className: participantClass,
@@ -829,7 +833,7 @@
     async function renderLeaderboard() {
       let entries = getLeaderboard();
       try {
-        const response = await fetch("/api/results", { cache: "no-store" });
+        const response = await fetch(resultsApiUrl, { cache: "no-store", credentials: "include" });
         if (response.ok) {
           const data = await response.json();
           if (Array.isArray(data.results)) entries = data.results;
