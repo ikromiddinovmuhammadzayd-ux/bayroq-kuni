@@ -638,14 +638,18 @@
       <div class="reveal">
         <div class="section-label">Mini viktorina</div>
         <h2 class="section-title">10 savollik sinov</h2>
-        <p>Viktorina darhol boshlanadi. Savollarga javob bering va yakunda natijangiz bilan sertifikatni yuklab oling.</p>
+        <p>Tayyor bo‘lsangiz, viktorinani boshlang. 10 ta savolga 2 daqiqa ichida javob bering va yakunda sertifikat oling.</p>
       </div>
       <div class="quiz-card reveal" id="quizCard">
         <div class="quiz-topline">
           <div class="progress" style="flex:1"><div class="progress-bar" id="progressBar"></div></div>
-          <div class="quiz-timer" id="quizTimer" style="display:block">Vaqt: 02:00</div>
+          <div class="quiz-timer" id="quizTimer">Vaqt: 02:00</div>
         </div>
-        <div id="quizScreen">
+        <div id="quizStartScreen">
+          <h3 class="question">Viktorinani boshlashga tayyormisiz?</h3>
+          <button class="primary" id="startQuizButton" type="button">Savollarni boshlash</button>
+        </div>
+        <div id="quizScreen" style="display:none">
           <h3 class="question" id="question"></h3>
           <div class="answers" id="answers"></div>
           <div class="quiz-status" id="quizStatus"></div>
@@ -713,6 +717,8 @@
     let quizFinished = false;
     const QUIZ_LIMIT_SECONDS = 120;
     const quizScreen = document.getElementById("quizScreen");
+    const quizStartScreen = document.getElementById("quizStartScreen");
+    const startQuizButton = document.getElementById("startQuizButton");
     const certificateWrap = document.getElementById("certificateWrap");
     const quizTimerEl = document.getElementById("quizTimer");
     const questionEl = document.getElementById("question");
@@ -753,6 +759,14 @@
         }
       }, 1000);
     }
+
+    startQuizButton.addEventListener("click", () => {
+      quizStartScreen.style.display = "none";
+      quizScreen.style.display = "block";
+      quizTimerEl.style.display = "block";
+      renderQuiz();
+      startTimer();
+    });
 
     function formatTime(totalSeconds) {
       const minutes = Math.floor(totalSeconds / 60);
@@ -854,8 +868,6 @@
       link.click();
     });
 
-    renderQuiz();
-    startTimer();
   </script>
   <script>
     const splashScreen = document.getElementById("splashScreen");
