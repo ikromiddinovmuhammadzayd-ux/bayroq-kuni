@@ -362,6 +362,24 @@
       font-weight: 900;
       text-align: right;
     }
+    .quiz-start {
+      padding: 28px 8px 8px;
+      text-align: center;
+    }
+    .quiz-start h3 { margin: 0 0 10px; font-family: Georgia, serif; font-size: 28px; }
+    .quiz-start p { margin: 0 auto 20px; color: #627284; line-height: 1.7; }
+    .quiz-start-button, .contact-button {
+      min-height: 52px;
+      padding: 0 22px;
+      border: 0;
+      border-radius: 5px;
+      color: white;
+      background: var(--red);
+      font-weight: 800;
+      transition: transform .2s, background .2s;
+    }
+    .quiz-start-button:hover, .contact-button:hover { transform: translateY(-2px); }
+    .contact-button { border: 1px solid rgba(255,255,255,.35); background: rgba(255,255,255,.08); }
     footer {
       padding: 32px 24px;
       color: rgba(255,255,255,.72);
@@ -440,7 +458,7 @@
       h1 { font-size: 54px; }
       .hero-copy { font-size: 16px; }
       .hero-actions { flex-direction: column; }
-      .primary, .secondary { width: 100%; }
+      .primary, .secondary, .contact-button { width: 100%; }
       .flag-stage { width: 100%; }
       .date-plaque { width: 110px; height: 110px; right: -8px; bottom: -28px; }
       .date-plaque strong { font-size: 38px; }
@@ -497,6 +515,7 @@
         <div class="hero-actions">
           <button class="primary" onclick="document.querySelector('#maʼno').scrollIntoView()">Bayroqni kashf eting</button>
           <button class="secondary" onclick="document.querySelector('#savol').scrollIntoView()">Tezkor savol</button>
+          <button class="contact-button" onclick="document.querySelector('#aloqa').scrollIntoView()">Yaratuvchilar bilan bog‘lanish</button>
         </div>
       </main>
 
@@ -638,16 +657,17 @@
       <div class="reveal">
         <div class="section-label">Mini viktorina</div>
         <h2 class="section-title">10 savollik sinov</h2>
-        <p>Tayyor bo‘lsangiz, viktorinani boshlang. 10 ta savolga 2 daqiqa ichida javob bering va yakunda sertifikat oling.</p>
+        <p>Savollarni boshlash tugmasini bosing. Shundan keyin 2 daqiqalik taymer ishga tushadi.</p>
       </div>
       <div class="quiz-card reveal" id="quizCard">
         <div class="quiz-topline">
-          <div class="progress" style="flex:1"><div class="progress-bar" id="progressBar"></div></div>
+          <div class="progress" style="flex:1"><div class="progress-bar" id="progressBar" style="width:0"></div></div>
           <div class="quiz-timer" id="quizTimer">Vaqt: 02:00</div>
         </div>
-        <div id="quizStartScreen">
-          <h3 class="question">Viktorinani boshlashga tayyormisiz?</h3>
-          <button class="primary" id="startQuizButton" type="button">Savollarni boshlash</button>
+        <div class="quiz-start" id="quizStartScreen">
+          <h3>Tayyormisiz?</h3>
+          <p>10 ta savolga 2 daqiqa ichida javob bering. Taymer tugma bosilganda boshlanadi.</p>
+          <button class="quiz-start-button" id="startQuiz" type="button">Savollarni boshlash</button>
         </div>
         <div id="quizScreen" style="display:none">
           <h3 class="question" id="question"></h3>
@@ -662,7 +682,7 @@
     </div>
   </section>
 
-  <footer>
+  <footer id="aloqa">
     <div class="footer-inner">
       <div>
         <strong>18 NOYABR — BAYROQ KUNI</strong><br>
@@ -715,16 +735,28 @@
     let elapsedSeconds = 0;
     let quizTimer = null;
     let quizFinished = false;
+    let quizStarted = false;
     const QUIZ_LIMIT_SECONDS = 120;
-    const quizScreen = document.getElementById("quizScreen");
     const quizStartScreen = document.getElementById("quizStartScreen");
-    const startQuizButton = document.getElementById("startQuizButton");
+    const startQuizButton = document.getElementById("startQuiz");
+    const quizScreen = document.getElementById("quizScreen");
     const certificateWrap = document.getElementById("certificateWrap");
     const quizTimerEl = document.getElementById("quizTimer");
     const questionEl = document.getElementById("question");
     const answersEl = document.getElementById("answers");
     const statusEl = document.getElementById("quizStatus");
     const progressEl = document.getElementById("progressBar");
+
+    startQuizButton.addEventListener("click", () => {
+      if (quizStarted) return;
+      quizStarted = true;
+      quizStartScreen.style.display = "none";
+      quizScreen.style.display = "block";
+      quizTimerEl.style.display = "block";
+      progressEl.style.width = `${100 / quiz.length}%`;
+      renderQuiz();
+      startTimer();
+    });
 
     function renderQuiz() {
       const [question, answers, correct] = quiz[quizIndex];
@@ -760,14 +792,6 @@
       }, 1000);
     }
 
-    startQuizButton.addEventListener("click", () => {
-      quizStartScreen.style.display = "none";
-      quizScreen.style.display = "block";
-      quizTimerEl.style.display = "block";
-      renderQuiz();
-      startTimer();
-    });
-
     function formatTime(totalSeconds) {
       const minutes = Math.floor(totalSeconds / 60);
       const seconds = totalSeconds % 60;
@@ -788,6 +812,7 @@
       }
 
       setTimeout(() => {
+        if (quizFinished) return;
         quizIndex++;
         if (quizIndex < quiz.length) {
           renderQuiz();
